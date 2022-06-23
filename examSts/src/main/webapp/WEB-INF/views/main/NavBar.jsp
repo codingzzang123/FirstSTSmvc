@@ -21,19 +21,19 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath }/main">Home</a>
               </li>
              
                <li class="nav-item">
-                <a class="nav-link" href="#">Board</a>
+                <a class="nav-link" href="${pageContext.request.contextPath }/books/list">Book</a>
               </li>
               <li class="nav-item dropdown">
        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
         			Menu
        			</a>
 	        	<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        			<li><a class="dropdown-item" href="#">Login</a></li>
-           			<li><a class="dropdown-item" href="#">Sign Up</a></li>
+        			<li><a class="dropdown-item" href="${pageContext.request.contextPath }/member/login">Login</a></li>
+           			<li><a class="dropdown-item" href="${pageContext.request.contextPath }/member/join">Sign Up</a></li>
 	        	</ul>
               </li>	
             </ul>

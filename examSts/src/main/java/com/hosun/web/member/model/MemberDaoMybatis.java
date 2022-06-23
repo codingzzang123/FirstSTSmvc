@@ -8,11 +8,23 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemberDaoMybatis implements MemberDAO{
+	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
 	public List<MemberVO> list() {
-		return sqlSessionTemplate.selectList("selectAll");
+		return sqlSessionTemplate.selectList("selectMemberAll");
+	}
+	
+	@Override
+	public void insert(MemberVO memberVO) {
+		sqlSessionTemplate.insert("join",memberVO);
+	}
+	
+	@Override
+	public int idCheck(String id) {
+		int cnt = sqlSessionTemplate.selectOne("idCheck", id);
+		return cnt;
 	}
 }

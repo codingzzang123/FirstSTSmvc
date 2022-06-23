@@ -17,4 +17,15 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberVO> list() {
 		return dao.list();
 	}
+	
+	@Override
+	public void insert(MemberVO memberVO) {
+		dao.insert(memberVO);
+	}
+	
+	@Override
+	public int idCheck(String id) {
+		int cnt = dao.idCheck(id);
+		return cnt;
+	}
 }

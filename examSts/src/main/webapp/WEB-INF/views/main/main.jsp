@@ -46,20 +46,22 @@
 		}
 		window.onload = function(){
 		    setClock();
-		    setInterval(setClock,1000); //1초마다 setClock 함수 실행
+		    setInterval(setClock,1000); 
 		}
 	</script>
 </head>
 <body>
+	<jsp:include page="NavBar.jsp"></jsp:include>
 	<div class="p-5 mb-4 bg-light rounded-3 text-center">
 		<div class="clock">
 	        <div id="time" class="time"></div>
 	        <div id="date" class="date"></div>
     	</div>
         <div class="container-fluid py-5 mt-5">
-            <h1 class="display-5 fw-bold"> 💬 Hosun Page </h1>
+            <h1 class="display-5 fw-bold"> 💬  </h1>
        		<p class="fs-4">Login is Essential ⛔
-       			<a href="#"><button class="btn btn-dark btn-lg" type="button" style="font-weight: bold;">LOGIN</button></a>
+       			<a href="${pageContext.request.contextPath }/member/login"><button class="btn btn-dark btn-lg" type="button" style="font-weight: bold;">LOGIN</button></a>
+       			<a href="${pageContext.request.contextPath }/member/join"><button class="btn btn-primary btn-lg" type="button" style="font-weight: bold;">JOIN</button></a>
        		</p>
       	</div>
 	</div>

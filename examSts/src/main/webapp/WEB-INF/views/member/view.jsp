@@ -10,9 +10,10 @@
 <body>
 	  
 	<c:forEach var="vo" items="${vo }">
-		<h1>id = ${vo.id }</h1><br>
-		<h1>name = ${vo.name }</h1><br>
-		<h1>birth = ${vo.birth }</h1><br>
+		id = ${vo.id }<br>
+		name = ${vo.name }<br>
+		birth = ${vo.birth }<br>
+		<hr>
 	</c:forEach>
 </body>
 </html>
