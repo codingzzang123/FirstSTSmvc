@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bookDaoMybatis">
+	<select id="selectBookAll" resultType="bookVO" parameterType="command"> <!-- command = 객체 -->
+		select * from 
+			(select rownum rnum, no, bookname,writer,publisher,price,img,info,isbn 
+				FROM(select * from book order by no DESC))
+					<![CDATA[where rnum>=#{start} and rnum<=#{end}]]> 
+	</select>
+	
+	<insert id="write" parameterType="bookVO">
+		insert into book values(
+			seq_book.nextval,#{bookname},#{writer},#{publisher},#{price},
+			#{img},#{info},#{isbn})
+	</insert>
+	
+	<select id="searchByBookname" parameterType="command" resultType="bookVO">
+		select * from 
+			(select rownum rnum, no, bookname,writer,publisher,price,img,info,isbn 
+				FROM(select * from book where bookname like '%'||#{bookname}||'%' order by no DESC))
+					<![CDATA[where rnum>=#{start} and rnum<=#{end}]]>
+	</select>
+	
+	<select id="searchByWriter" parameterType="command" resultType="bookVO">
+		select * from 
+			(select rownum rnum, no, bookname,writer,publisher,price,img,info,isbn 
+				FROM(select * from book where writer like '%'||#{writer}||'%' order by no DESC))
+					<![CDATA[where rnum>=#{start} and rnum<=#{end}]]>
+	</select>
+	
+	<select id="selectById" parameterType="int" resultType="bookVO">
+		select * from book where no = #{no}
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(*) from book
+	</select>
+	
+	<select id="getWriterCount" parameterType="String" resultType="int">
+		select count(*) from book where writer like '%'||#{keyword}||'%'
+	</select>
+	
+	<select id="getTitleCount" parameterType="String" resultType="int">
+		select count(*) from book where bookname like '%'||#{keyword}||'%'
+	</select>
+</mapper>

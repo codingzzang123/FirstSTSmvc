@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="useGeneratedKeys" value="false"/>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="cacheEnabled" value="false" />
+    	<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	
+	<typeAliases>
+		<typeAlias alias="memberVO" type="com.hosun.web.member.model.MemberVO"/>
+		<typeAlias alias="bookVO" type="com.hosun.web.book.model.BookVO"/>
+		<typeAlias alias="command" type="com.hosun.web.book.controller.PagingCommand"/>
+	</typeAliases>
+</configuration>
