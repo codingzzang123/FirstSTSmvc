@@ -40,25 +40,31 @@ public class BookController {
 	public String form(HttpServletRequest request, Model model) {
 		
 		command = new PagingCommand();
-		String pageNum = request.getParameter("pageNum");
+		String pageNum = request.getParameter("pageNum"); //현재 페이지 번호
 		String search = request.getParameter("search"); // 책이름 or 저자
 		String keyword = request.getParameter("keyword"); // input에 친 내용
 		
-		if(pageNum == null){
+		if(pageNum == null){ //처음 list에 들어왔을때에는  url에 ?pageNum이 없으므로 1을 설정 
 			pageNum = "1";
 	    }
-		int PageSize = 5;
+		int PageSize = 5; //한 화면에 보여지는 게시물의 갯수 
 	    int curPageNum = Integer.parseInt(pageNum);
-	    int lastPageNum;
-	    int start = (curPageNum-1) * PageSize + 1;
-	    int end = curPageNum * PageSize;
+	    int lastPageNum; 
+	    int start = (curPageNum-1) * PageSize + 1; 
+	    int end = curPageNum * PageSize; 
+	    /*
+	     * PageSize가 5이므로
+	     * pageNum=1 , start = 1 end = 5;
+	     * pageNum=1 , start = 6 end = 10;
+	     * pageNum=1 , start = 11 end = 15;
+	     * */
 	    
 		List<BookVO> ls = new ArrayList<>();
 
-		if(search==null||search.length()==0) {
+		if(search==null||search.length()==0) { //검색하지 않았을때
 			command.setStart(start); command.setEnd(end); 
 			ls = service.list(command);
-			p.makeLastPageNum();
+			p.makeLastPageNum(); 
 		}
 		else if(search.equals("title")) { //책 제목 검색
 			command.setStart(start); command.setEnd(end); command.setBookname(keyword);
@@ -73,17 +79,22 @@ public class BookController {
 		
 		lastPageNum = p.getLastPageNum();
 		
-		p.makeBlock(curPageNum);
+		p.makeBlock(curPageNum); //현재 페이지 번호에 맡게 페이지 블록을 만듬
 	    Integer blockStartNum = p.getBlockStartNum();
+	    Integer blockLastNum = p.getBlockLastNum();
+	    
+	    
+	    model.addAttribute("ls",ls);
 	    
 	    /* 페이징 attribute 추가 */
-	    model.addAttribute("start",blockStartNum); //블럭 시작 넘버 ,
+	    model.addAttribute("blockStartNum",blockStartNum); //블럭 시작 넘버 ,
+	    model.addAttribute("blockLastNum",blockLastNum); //추가한것1.
 	    model.addAttribute("now",curPageNum); //현재 페이지 위치 
 	    model.addAttribute("end",lastPageNum); //블럭 마지막 번호
 	    model.addAttribute("search",search); 
 	    model.addAttribute("keyword",keyword);
 	    
-		model.addAttribute("ls",ls);
+		
 		return "book/list";
 	}
 	

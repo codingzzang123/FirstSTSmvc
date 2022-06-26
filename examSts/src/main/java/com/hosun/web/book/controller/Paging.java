@@ -1,6 +1,5 @@
 package com.hosun.web.book.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,21 +12,11 @@ public class Paging {
 	@Autowired
 	private BookDAO dao;
 	
-	
-	private final static int pageBlock = 5;
+	private final static int pageBlock = 5; // (1~5) (6~10) 같이 블럭의 갯수.
     private int blockStartNum = 0;
     private int blockLastNum = 0;
     private int lastPageNum = 0;
-    private int totalBlock;
-    private int pageSize = 5;
     
-    public int getTotalBlock() {
-		return totalBlock;
-	}
-
-	public void setTotalBlock(int totalBlock) {
-		this.totalBlock = totalBlock;
-	}
     public int getPageBlock() {
     	return pageBlock;
     }
@@ -49,42 +38,41 @@ public class Paging {
     public void setLastPageNum(int lastPageNum) {
         this.lastPageNum = lastPageNum;
     }
-    public void makeTotalBlock(int count) {
-		if(count%pageSize==0) {
-			totalBlock = count/pageSize;
-		}else {
-			totalBlock = count/pageSize+1;
-		}
-	}
-    // block을 생성
-    // 현재 페이지가 속한 block의 시작 번호, 끝 번호를 계산
-    public void makeBlock(int curPage){
-//        if(curPage==1) {
-//            blockStartNum = 1; 
-//            blockLastNum = curPage + 2; 
-//        }else if(curPage == lastPageNum) {
-//            blockStartNum = curPage-4; 
-//            blockLastNum = curPage;
+   
+    // block을 생성, 현재 페이지가 속한 block의 시작 번호, 끝 번호를 계산
+//    public void makeBlock(int curPage){
+//    	if(curPage-3 <= 0) {
+//    		blockStartNum = 1;
+//        	blockLastNum = (lastPageNum < 5 ? lastPageNum : 5);
+//    	}else if(lastPageNum-curPage==1) {
+//    		blockStartNum = curPage-3;
+//    		blockLastNum = (curPage != lastPageNum? curPage+1 : curPage);
+//    	}else if(lastPageNum-curPage==0) {
+//    		blockStartNum = curPage-4;
+//    		blockLastNum = lastPageNum;
 //    	}else {
-//        	if(curPage-2 == 0) { //페이징블럭 2를 클릭했을때  
-//        		blockStartNum = curPage-1; 
-//            	blockLastNum = curPage + 2;
-//        	}else if(lastPageNum-curPage==1) {
-//        		blockStartNum = curPage-3; 
-//    			blockLastNum = curPage + 1;
-//        	}else{
-//        		blockStartNum = curPage-2;
-//        		blockLastNum = curPage + 2;
-//        	}
-//        }
-    	blockStartNum = 1;
-    }
-    
-    private int total;
+//    		blockStartNum = curPage-2;
+//    		blockLastNum = (curPage != lastPageNum? curPage+2 : curPage);
+//    	}
+//    }
+    public void makeBlock(int curPage){
+        int blockNum = 0;
 
-	// 총 페이지의 마지막 번호
+        blockNum = (int)Math.floor((curPage-1)/ pageBlock);
+        blockStartNum = (pageBlock * blockNum) + 1;
+        
+        blockLastNum = blockStartNum + (pageBlock-1);
+        
+        if(blockLastNum != 0 && lastPageNum !=0) {
+	        if(blockLastNum / lastPageNum > 0)
+	        	blockLastNum = lastPageNum;
+        }
+        
+    }
+
+	// 총 페이지의 마지막 번호(검색 하지 않았을때 + 검색 했을 때)
     public void makeLastPageNum() {
-        total = dao.getCount(); 
+    	int total = dao.getCount(); 
 
         if( total % pageBlock == 0 ) {
             lastPageNum = (int)Math.floor(total/5);
@@ -94,7 +82,7 @@ public class Paging {
         }
     }
     public void makeLastPageNumWriter(String ls) {
-    	total = dao.getWriterCount(ls); 
+    	int total = dao.getWriterCount(ls); 
     	
     	if( total % pageBlock == 0 ) {
     		this.lastPageNum = (int)Math.floor(total/5);
@@ -106,7 +94,7 @@ public class Paging {
     
     
     public void makeLastPageNumTitle(String ls) {
-    	total = dao.getTitleCount(ls);
+    	int total = dao.getTitleCount(ls);
     	
     	if( total % pageBlock == 0 ) {
     		this.lastPageNum = (int)Math.floor(total/5);

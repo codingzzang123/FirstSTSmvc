@@ -80,121 +80,129 @@
 	        <div class="col-lg-11">
 	            <nav aria-label="Page navigation example">
 	                <ul class="pagination  nav justify-content-center">
-	                	<!-- 페이징 << 버튼 -->
 	                	<c:choose>
-                			<c:when test="${keyword eq null }">
-                				<c:choose>
-	                				<c:when test="${now ne start }">
-			                			<li class="page-item">
-								      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now-1 }" aria-label="Previous">
-									        	<span aria-hidden="true">&laquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<li class="page-item">
-								      		<a class="page-link" aria-label="Previous">
-									        	<span aria-hidden="true">&laquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:otherwise>
-		                		</c:choose>
-                			</c:when>
-                			<c:when test="${keyword ne null }">
-                				<c:choose>
-	                				<c:when test="${now ne start }">
-			                			<li class="page-item">
-								      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now-1 }&search=${search }&keyword=${keyword }" aria-label="Previous">
-									        	<span aria-hidden="true">&laquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<li class="page-item">
-								      		<a class="page-link" aria-label="Previous">
-									        	<span aria-hidden="true">&laquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:otherwise>
-		                		</c:choose>
-                			</c:when>
-	                	</c:choose>
-			      		
-					   
-					    <!-- 페이징 블럭 번호  -->
-					    <c:forEach begin="${start }" end="${end }" var="i">
-					    	<c:choose>
-					    		<c:when test="${keyword ne null }">
-					    			<c:choose>
-					    				<c:when test="${i eq now }">
-					    					<li class="page-item active" aria-current="true">
-												<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }&search=${search }&keyword=${keyword }">${i }</a>
-											</li>
-					    				</c:when>
-					    				<c:otherwise>
-					    					<li class="page-item" aria-current="true">
-												<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }&search=${search }&keyword=${keyword }">${i }</a>
-											</li>
-					    				</c:otherwise>
-					    			</c:choose>
-					    		</c:when>
-					    		<c:otherwise>
-					    			<c:choose>
-					    				<c:when test="${i eq now }">
-					    					<li class="page-item active" aria-current="true">
-												<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }">${i }</a>
-											</li>
-					    				</c:when>
-					    				<c:otherwise>
-					    					<li class="page-item" aria-current="true">
-												<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }">${i }</a>
-											</li>
-					    				</c:otherwise>
-					    			</c:choose>
-					    		</c:otherwise>
-					    	</c:choose>
-					    </c:forEach>
-					    
-					    <!-- 페이징 >> 버튼 -->
-					    <c:choose>
-	                		<c:when test="${keyword eq null }">
-                				<c:choose>
-	                				<c:when test="${now ne end }">
-			                			<li class="page-item">
-								      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now+1 }" aria-label="Next">
-									        	<span aria-hidden="true">&raquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<li class="page-item">
-								      		<a class="page-link" aria-label="Next">
-									        	<span aria-hidden="true">&raquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:otherwise>
-		                		</c:choose>
-                			</c:when>
-                			<c:when test="${keyword ne null }">
-                				<c:choose>
-	                				<c:when test="${now ne end }">
-			                			<li class="page-item">
-								      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now+1 }&search=${search }&keyword=${keyword }" aria-label="Next">
-									        	<span aria-hidden="true">&raquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<li class="page-item">
-								      		<a class="page-link" aria-label="Next">
-									        	<span aria-hidden="true">&raquo;</span>
-									     	</a>
-								     	</li>
-			                		</c:otherwise>
-		                		</c:choose>
-                			</c:when>
-	                	</c:choose>
-					    
+			    			<c:when test="${empty ls }">
+			    			</c:when>
+							<c:when test="${!empty ls }">
+								<!-- 페이징 << 버튼 -->
+			                	<c:choose>
+		                			<c:when test="${keyword eq null }">
+		                				<c:choose>
+			                				<c:when test="${now ne 1 }">
+					                			<li class="page-item">
+										      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now-1 }" aria-label="Previous">
+											        	<span aria-hidden="true">&laquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<li class="page-item">
+										      		<a class="page-link" aria-label="Previous">
+											        	<span aria-hidden="true">&laquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:otherwise>
+				                		</c:choose>
+		                			</c:when>
+		                			<c:when test="${keyword ne null }">
+		                				<c:choose>
+			                				<c:when test="${now ne 1 }">
+					                			<li class="page-item">
+										      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now-1 }&search=${search }&keyword=${keyword }" aria-label="Previous">
+											        	<span aria-hidden="true">&laquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<li class="page-item">
+										      		<a class="page-link" aria-label="Previous">
+											        	<span aria-hidden="true">&laquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:otherwise>
+				                		</c:choose>
+		                			</c:when>
+			                	</c:choose>
+					      		
+							   
+					   			<!-- 페이징 블럭 번호  -->
+							    <c:forEach begin="${blockStartNum }" end="${blockLastNum }" var="i">
+							    	<c:choose>
+							    		<c:when test="${keyword ne null }">
+							    			<c:choose>
+							    				<c:when test="${i eq now }">
+							    					<li class="page-item active" aria-current="true">
+														<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }&search=${search }&keyword=${keyword }">${i }</a>
+													</li>
+							    				</c:when>
+							    				<c:otherwise>
+							    					<li class="page-item" aria-current="true">
+														<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }&search=${search }&keyword=${keyword }">${i }</a>
+													</li>
+							    				</c:otherwise>
+							    			</c:choose>
+							    		</c:when>
+							    		<c:otherwise>
+							    			<c:choose>
+							    				<c:when test="${i eq now }">
+							    					<li class="page-item active" aria-current="true">
+														<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }">${i }</a>
+													</li>
+							    				</c:when>
+							    				<c:otherwise>
+							    					<li class="page-item" aria-current="true">
+														<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${i }">${i }</a>
+													</li>
+							    				</c:otherwise>
+							    			</c:choose>
+							    		</c:otherwise>
+							    	</c:choose>
+							    </c:forEach>
+							   		
+							   
+							    
+							    
+							    <!-- 페이징 >> 버튼 -->
+							    <c:choose>
+			                		<c:when test="${keyword eq null }">
+		                				<c:choose>
+			                				<c:when test="${now ne end }">
+					                			<li class="page-item">
+										      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now+1 }" aria-label="Next">
+											        	<span aria-hidden="true">&raquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<li class="page-item">
+										      		<a class="page-link" aria-label="Next">
+											        	<span aria-hidden="true">&raquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:otherwise>
+				                		</c:choose>
+		                			</c:when>
+		                			<c:when test="${keyword ne null }">
+		                				<c:choose>
+			                				<c:when test="${now ne end }">
+					                			<li class="page-item">
+										      		<a class="page-link" href="${pageContext.request.contextPath }/books/list?pageNum=${now+1 }&search=${search }&keyword=${keyword }" aria-label="Next">
+											        	<span aria-hidden="true">&raquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<li class="page-item">
+										      		<a class="page-link" aria-label="Next">
+											        	<span aria-hidden="true">&raquo;</span>
+											     	</a>
+										     	</li>
+					                		</c:otherwise>
+				                		</c:choose>
+		                			</c:when>
+			                	</c:choose>
+							</c:when>
+						</c:choose>
 					</ul>
 	            </nav>
 	        </div>
