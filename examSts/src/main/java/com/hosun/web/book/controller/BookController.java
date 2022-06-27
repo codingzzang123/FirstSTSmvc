@@ -30,60 +30,29 @@ public class BookController {
 	
 	@Autowired
 	private BookService service;
-	@Autowired
-	private Paging p;
 	
-	private PagingCommand command;
+	@Autowired
+	private PagingService pService;
+	
 	private static final DecimalFormat f = new DecimalFormat("###,###,###");
 	
 	@RequestMapping("/books/list") 
 	public String form(HttpServletRequest request, Model model) {
-		
-		command = new PagingCommand();
-		String pageNum = request.getParameter("pageNum");
+
+		String pageNum = request.getParameter("pageNum"); //현재 페이지 번호
 		String search = request.getParameter("search"); // 책이름 or 저자
 		String keyword = request.getParameter("keyword"); // input에 친 내용
 		
-		if(pageNum == null){
-			pageNum = "1";
-	    }
-		int PageSize = 5;
-	    int curPageNum = Integer.parseInt(pageNum);
-	    int lastPageNum;
-	    int start = (curPageNum-1) * PageSize + 1;
-	    int end = curPageNum * PageSize;
+		pService.startPaging(pageNum, search, keyword);
 	    
-		List<BookVO> ls = new ArrayList<>();
-
-		if(search==null||search.length()==0) {
-			command.setStart(start); command.setEnd(end); 
-			ls = service.list(command);
-			p.makeLastPageNum();
-		}
-		else if(search.equals("title")) { //책 제목 검색
-			command.setStart(start); command.setEnd(end); command.setBookname(keyword);
-			ls = service.searchBookname(command);
-			p.makeLastPageNumTitle(keyword);
-		}
-		else if(search.equals("writer")) { //글쓴이 검색
-			command.setStart(start); command.setEnd(end); command.setWriter(keyword);
-			ls = service.searchWriter(command);
-			p.makeLastPageNumWriter(keyword);
-		}
-		
-		lastPageNum = p.getLastPageNum();
-		
-		p.makeBlock(curPageNum);
-	    Integer blockStartNum = p.getBlockStartNum();
-	    
+	    model.addAttribute("ls",pService.getLs());
 	    /* 페이징 attribute 추가 */
-	    model.addAttribute("start",blockStartNum); //블럭 시작 넘버 ,
-	    model.addAttribute("now",curPageNum); //현재 페이지 위치 
-	    model.addAttribute("end",lastPageNum); //블럭 마지막 번호
+	    model.addAttribute("blockStartNum",pService.getBlockStartNum()); //블럭 시작 넘버 ,
+	    model.addAttribute("blockLastNum",pService.getBlockLastNum()); //추가한것1.
+	    model.addAttribute("now",pService.getCurPage()); //현재 페이지 위치 
+	    model.addAttribute("end",pService.getLastPageNum()); //블럭 마지막 번호
 	    model.addAttribute("search",search); 
 	    model.addAttribute("keyword",keyword);
-	    
-		model.addAttribute("ls",ls);
 		return "book/list";
 	}
 	
