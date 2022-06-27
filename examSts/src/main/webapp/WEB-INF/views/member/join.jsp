@@ -374,6 +374,61 @@
 		.id_ok{color:#fff; display: none;}
 		.id_already{color:#6A82FB; display: none;}
 		
+		 *{ 
+            font-family: Courier New, Helvetica, sans-serif;
+        	} 
+ 
+        button { /*버튼이 심심해 보여서 제 마음대로 꾸며 보았습니다.*/
+            padding: 20px;
+            border: none;
+            border-radius: 4px;
+            color: black;
+            background-color: lightsalmon;
+            font-size: 24px;
+            font-weight: bold;
+        }
+ 
+        .modal_Wrap { /*모달창에 전체틀*/
+            display: none;
+            position: fixed;
+            padding-top: 100px;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: auto;
+            z-index: 1;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+ 
+        .modal_Content { /*모달창의 메인*/
+            margin: auto;
+            padding: 20px;
+            width: 50%;
+            border: 1px solid grey;
+            background-color: #fff;
+        }
+ 
+        .modal_Content p { /*모달창의 본문*/
+            font-size: 20px;
+            font-weight: bold;
+        }
+ 
+        .close { /*모달창을 닫는 X버튼*/
+            float: right;
+            color: grey;
+            font-size: 28px;
+            font-weight: bold;
+            
+        }
+ 
+        .close:hover,
+        .close:focus { /*X버튼에 마우스가 올라가거나 요소가 선택된 경우, 이벤트 상태 일때 실행*/
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 	</style>
 </head>
 <body>
@@ -383,7 +438,7 @@
 		<div class="container-fluid py-5">
 	        <form method="post" role="form" id="usercheck" name="member" id="reg_submit" value="${memberVO.id }" onsubmit="return validate()">
 	        	<div class="container mt-5 mb-5" style="width: 60%; font-weight: bold; font-size: 20px;">
-	        		<h1><b>❤회원가입❤</b></h1>
+	        		<h1><b>SignUp Page 📑</b></h1>
 		            <div class="mb-3 mt-5 form-group">
 		                <label for="id">아이디</label>
 		                <input type="text" class="form-control" id="id" name="id" placeholder="Id" required oninput = "checkId()">
@@ -457,29 +512,40 @@
 		</div>
 	</div>
 	
-	<div class="modeltest">
-      <div class="modal">
-         <button onclick="CloseModal();"><img src="icon_X_2XL.svg" alt=""></button>
-         <h1>- Happy New Year 2021 -</h1>
-         <h2>2021년 신축년 (辛丑年) </h2>
-         <h2>새해 복 많이 받으세요!</h2>
-         <figure><img src="ricecake.jpg" alt=""></figure>
-      </div>
-</div>
+	<div id="modal" class="modal_Wrap">
+        <div class="modal_Content">
+            <span id="closeModal" class="close">&times;</span> 
+            <p>아이디가 중복되었습니다.!</p>
+        </div>
+    </div>
+    
+    
 	<script>
 		function validate() {
 			if(idfff){
 				return true;
 			}else{
-				CloseModal();
+				startModal();
 				return false;
 			}
 	  	}
 		
-		 function CloseModal(){
-	         var CloseModal = document.querySelector(".modeltest");
-	         CloseModal.classList.add("CloseModal");
-	      }
+		 function startModal(){
+			 modal.style.display = 'block';
+		 }
+		 
+		 const myModal = document.getElementById('closeModal');
+		 
+		 myModal.onclick = function() {
+	            modal.style.display = 'none';
+	        }
+		
+		 
+		 window.onclick = function(event) {
+	            if(event.target == modal) {
+	                modal.style.display = 'none';
+	            }
+	        }
 	</script>
 </body>
 </html>

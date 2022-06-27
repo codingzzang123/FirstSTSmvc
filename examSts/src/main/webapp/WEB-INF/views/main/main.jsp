@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
+		
 		.clock{
 		    font-family:'Lucida Sans'; 
 		    text-align: center;
@@ -15,6 +16,7 @@
 		}
 		
 		.date{
+			font-family: Arial, Helvetica, sans-serif;
 		    font-size: 45px; 
 		    color: rgb(0, 0, 0);  /* 검은색 */
 		    visibility:hidden;
@@ -22,7 +24,7 @@
 		.time{
 		    font-size: 100px;
 		    font-weight: bold;
-		    color: rgb(179, 21, 171);  /*보라색 */
+		    color: rgb(0, 0, 0);  /*보라색 */
 		}
 	</style>
 	<script>
@@ -58,8 +60,9 @@
 	        <div id="date" class="date"></div>
     	</div>
         <div class="container-fluid py-5 mt-5">
-            <h1 class="display-5 fw-bold"> 💬  </h1>
-       		<p class="fs-4">Login is Essential ⛔
+            
+       		<p class="fs-4">Login is Essential ⛔ </p><br>
+     		<p class="fs-4">
        			<a href="${pageContext.request.contextPath }/member/login"><button class="btn btn-dark btn-lg" type="button" style="font-weight: bold;">LOGIN</button></a>
        			<a href="${pageContext.request.contextPath }/member/join"><button class="btn btn-primary btn-lg" type="button" style="font-weight: bold;">JOIN</button></a>
        		</p>
