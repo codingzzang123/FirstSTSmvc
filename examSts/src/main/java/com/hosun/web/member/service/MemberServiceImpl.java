@@ -17,10 +17,21 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberVO> list() {
 		return dao.list();
 	}
+	/* 이렇게 쓰면 존나 잘됨 ㅋ */
+//	@Override
+//	public void insert(MemberVO memberVO) throws Exception {
+//		dao.insert(memberVO);
+//	}
 	
+	/* 이렇게 쓰면  안되는것 ..  */
 	@Override
-	public void insert(MemberVO memberVO) {
-		dao.insert(memberVO);
+	public int insert(MemberVO memberVO) {
+
+//		if (dao.insert(memberVO) != 1) {
+//			System.out.println("여기를 봐죠 : dao.insert(memberVO) : " + dao.insert(memberVO));
+//			throw new MemberDuplicatedException();
+//		}
+		return dao.insert(memberVO);
 	}
 	
 	@Override

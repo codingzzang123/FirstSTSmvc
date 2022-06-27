@@ -14,17 +14,17 @@ public class MemberDaoMybatis implements MemberDAO{
 	
 	@Override
 	public List<MemberVO> list() {
-		return sqlSessionTemplate.selectList("selectMemberAll");
+		return sqlSessionTemplate.selectList("member.dtd.selectMemberAll");
 	}
 	
 	@Override
-	public void insert(MemberVO memberVO) {
-		sqlSessionTemplate.insert("join",memberVO);
+	public int insert(MemberVO memberVO){
+		return sqlSessionTemplate.insert("member.dtd.join",memberVO);
 	}
 	
 	@Override
 	public int idCheck(String id) {
-		int cnt = sqlSessionTemplate.selectOne("idCheck", id);
+		int cnt = sqlSessionTemplate.selectOne("member.dtd.idCheck", id);
 		return cnt;
 	}
 }

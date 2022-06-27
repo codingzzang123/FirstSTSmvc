@@ -64,12 +64,10 @@
 		var birthJ = false;
 		
 		var address = $('#detailaddress');
-		
+		var idfff = false; //추가한 중복 체크 용도 변수
 		$(document).ready(function() {
 		   var address = $('#detailaddress');
-
-		 //아이디 중복확인
-		 
+		//아이디 중복확인
 		      $("#id").blur(function() {
 		// id = "id_reg" / name = "userId"
 		var id = $('#id').val();
@@ -85,8 +83,9 @@
 						$("#id_check").text("사용중인 아이디입니다 :p");
 						$("#id_check").css("color", "red");
 						$("#reg_submit").attr("disabled", true);
+						idfff = false;
 					} else {
-						
+						idfff = true;
 						if(idJ.test(id)){
 							// 0 : 아이디 길이 / 문자열 검사
 							$("#id_check").text("사용가능한 아이디입니다 :p");
@@ -374,6 +373,7 @@
 	<style>
 		.id_ok{color:#fff; display: none;}
 		.id_already{color:#6A82FB; display: none;}
+		
 	</style>
 </head>
 <body>
@@ -381,7 +381,7 @@
 	
 	<div class="p-5 mb-4 bg-light rounded-3">
 		<div class="container-fluid py-5">
-	        <form method="post" role="form" id="usercheck" name="member" id="reg_submit" >
+	        <form method="post" role="form" id="usercheck" name="member" id="reg_submit" value="${memberVO.id }" onsubmit="return validate()">
 	        	<div class="container mt-5 mb-5" style="width: 60%; font-weight: bold; font-size: 20px;">
 	        		<h1><b>❤회원가입❤</b></h1>
 		            <div class="mb-3 mt-5 form-group">
@@ -406,25 +406,25 @@
 		            
 		            <div class="mb-3 form-group">
 		                <label for="name">이름</label>
-		                	<input type="text" class="form-control" id="name" name="name" placeholder="Name">
+		                	<input type="text" class="form-control" id="name" name="name" placeholder="Name" value="${memberVO.name }">
 		                <div class="eheck_font" id="name_check"></div>
 		            </div>
 		            
 		            <div class="mb-3 form-group">
 		               	<label for="birth">생년월일</label>
-		               	<input type="tel" class="form-control" id="birth" name="birth" placeholder="ex) 19990101">
+		               	<input type="tel" class="form-control" id="birth" name="birth" placeholder="ex) 19990101" value="${memberVO.birth }">
 		               	<div class="eheck_font" id="birth_check"></div>
 		            </div>
 		            
 		            <div class="mb-3 form-group">
 		                <label for="email">이메일 주소</label>
-		                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
+		                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail"value="${memberVO.email }">
 		                <div class="eheck_font" id="email_check"></div>
 		            </div>
 		            
 		            <div class="mb-3 form-group">
 		                <label for="phone">휴대폰 번호('-'없이 번호만 입력해주세요)</label>
-		                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number">
+		                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number" value="${memberVO.phone }">
 		                <div class="eheck_font" id="phone_check"></div>
 		            </div>
 		            
@@ -435,16 +435,16 @@
 		            </div>
 		                  
 					<div class="mb-3 form-group">                   
-					<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="oaddress" id="oaddress" type="text" readonly="readonly" >
-					    <button class="btn btn-primary" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+					<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="oaddress" id="oaddress" type="text" readonly="readonly" value="${memberVO.oaddress }" >
+					    <button type="button" class="btn btn-primary" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
 					</div>
 					
 					<div class="mb-3 form-group">
-					    <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="address" id="address" type="text" readonly="readonly" />
+					    <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="address" id="address" type="text" readonly="readonly" value="${memberVO.address }"/>
 					</div>
 					
 					<div class="mb-3 form-group">
-					    <input class="form-control" placeholder="상세주소" name="detailaddress" id="detailaddress" type="text"  />
+					    <input class="form-control" placeholder="상세주소" name="detailaddress" id="detailaddress" type="text" value="${memberVO.detailaddress }" />
 					</div>
 					
 					
@@ -456,5 +456,30 @@
 			</form>
 		</div>
 	</div>
+	
+	<div class="modeltest">
+      <div class="modal">
+         <button onclick="CloseModal();"><img src="icon_X_2XL.svg" alt=""></button>
+         <h1>- Happy New Year 2021 -</h1>
+         <h2>2021년 신축년 (辛丑年) </h2>
+         <h2>새해 복 많이 받으세요!</h2>
+         <figure><img src="ricecake.jpg" alt=""></figure>
+      </div>
+</div>
+	<script>
+		function validate() {
+			if(idfff){
+				return true;
+			}else{
+				CloseModal();
+				return false;
+			}
+	  	}
+		
+		 function CloseModal(){
+	         var CloseModal = document.querySelector(".modeltest");
+	         CloseModal.classList.add("CloseModal");
+	      }
+	</script>
 </body>
 </html>

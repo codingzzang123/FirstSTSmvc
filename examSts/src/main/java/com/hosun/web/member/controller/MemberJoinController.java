@@ -2,16 +2,15 @@ package com.hosun.web.member.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hosun.web.member.model.MemberDuplicatedException;
 import com.hosun.web.member.model.MemberVO;
 import com.hosun.web.member.service.MemberService;
 
@@ -26,9 +25,19 @@ public class MemberJoinController {
 	}
 	
 	@RequestMapping(value="/member/join",method=RequestMethod.POST)
-	public String submit(MemberVO command) {
-		service.insert(command);
-		return "redirect:/member/view";
+	public String submit(MemberVO memberVO, Errors errors,Model model) {
+		try {
+			if (service.idCheck(memberVO.getId()) == 1) {
+				throw new MemberDuplicatedException();
+			}
+			service.insert(memberVO);
+			return "redirect:/member/view";
+			
+		} catch (MemberDuplicatedException e) {
+			System.out.println("MemberDuplicatedException e!!");
+			model.addAttribute(memberVO);
+			return "member/join";
+		} 
 	}
 	
 	@RequestMapping(value="/member/view")

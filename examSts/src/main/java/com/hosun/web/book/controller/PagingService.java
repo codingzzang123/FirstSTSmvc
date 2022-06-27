@@ -19,7 +19,7 @@ public class PagingService {
 	private BookDAO dao;
 	private PagingCommand command;
 	
-	private static final int pageSize = 10; //한 페이지에 보여지는 게시물은 5개
+	private static final int pageSize = 3; //한 페이지에 보여지는 게시물은 5개
 	private final static int pageBlock = 5; //블럭 갯수는 5개
 	private int curPage;
 	private int blockStartNum = 0;
@@ -147,7 +147,7 @@ public class PagingService {
     }
 	
 	public void makeLastPageNum(int total) {
-        if( total % pageBlock == 0 ) {
+        if( total % pageSize == 0 ) {
             lastPageNum = (int)Math.floor(total/pageSize);
         }
         else {
