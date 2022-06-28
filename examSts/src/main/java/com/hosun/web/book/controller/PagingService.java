@@ -108,7 +108,7 @@ public class PagingService {
     	else
     		this.curPage=Integer.parseInt(pageNum);
     	
-    	this.start = (curPage-1) * pageSize + 1; 
+    	this.start = (curPage-1) * pageSize + 1; //2
         this.end = curPage * pageSize; 
     	
         if(search==null||search.length()==0) { //검색하지 않았을때
